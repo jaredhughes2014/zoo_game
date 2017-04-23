@@ -10,6 +10,7 @@ namespace Zoo
         protected override void UseControllers()
         {
             Use<AccountState, AccountController>();
+            Use<MainMenuState, MainMenuController>();
         }
     }
 }

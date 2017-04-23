@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using Jareel;
 
-namespace Zoo
+namespace Zoo.Test
 {
     /// <summary>
     /// Unit tests for the account stsate
@@ -19,18 +18,6 @@ namespace Zoo
         {
             Assert.NotNull(State.Alias, "The alias should not default to null");
             Assert.NotNull(State.Email, "The email should not default to null");
-        }
-
-        /// <summary>
-        /// Tests that clones of the AccountState are being executed correctly
-        /// </summary>
-        [Test]
-        public void TestAccountStateCloning()
-        {
-            var copy = MakeCopy();
-
-            Assert.AreEqual(copy.Alias, State.Alias, "AccountState clones have different aliases");
-            Assert.AreEqual(copy.Email, State.Email, "AccountState clones have different emails");
         }
 
         /// <summary>

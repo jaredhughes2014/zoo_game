@@ -15,7 +15,7 @@ namespace Zoo
     /// Contains the state of the player's account. Since this is a client-side container
     /// for data maintained server-side, this state is not persisted
     /// </summary>
-    [StateContainer]
+    [StateContainer("account")]
     public class AccountState : State
     {
         #region State Data

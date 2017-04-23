@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Jareel;
 
-namespace Zoo
+namespace Zoo.Test
 {
     /// <summary>
     /// Base class for a Jareel State test fixture. This base class provides easy access to
@@ -69,9 +69,9 @@ namespace Zoo
         /// Generates and returns a distinct copy of the tested State
         /// </summary>
         /// <returns>Copy of the tested state</returns>
-        protected AccountState MakeCopy()
+        protected S MakeCopy()
         {
-            return Master.SubscribeToStates<AccountState>().State1;
+            return Master.SubscribeToStates<S>().State1;
         }
 
         #endregion
