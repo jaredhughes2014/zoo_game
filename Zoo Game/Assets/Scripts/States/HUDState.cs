@@ -52,7 +52,7 @@ namespace Zoo
         [EventListener(HUDEvents.ToggleMovementMode)]
         private void ToggleMovementMode()
         {
-
+            State.RotateEnabled = !State.RotateEnabled;
         }
 
         #endregion
@@ -66,7 +66,7 @@ namespace Zoo
         [StateAdapter]
         private void AdaptUIState(UIState ui)
         {
-
+            State.Visible = ui.OpenPanel == UIState.HUD;
         }
 
         #endregion
@@ -78,7 +78,8 @@ namespace Zoo
         public override HUDState CloneState()
         {
             return new HUDState() {
-
+                RotateEnabled = State.RotateEnabled,
+                Visible = State.Visible,
             };
         }
     }

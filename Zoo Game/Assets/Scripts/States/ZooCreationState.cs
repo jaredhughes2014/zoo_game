@@ -43,7 +43,7 @@ namespace Zoo
         /// </summary>
         public ZooCreationState()
         {
-
+            NameText = "";
         }
     }
 
@@ -52,7 +52,7 @@ namespace Zoo
     /// </summary>
     public class ZooCreationController : StateController<ZooCreationState>
     {
-        #region State Data
+        #region Event Listeners
 
         /// <summary>
         /// Sets the name text of zoo creation
@@ -61,7 +61,7 @@ namespace Zoo
         [EventListener(ZooCreationEvents.SetNameText)]
         private void SetNameText(string text)
         {
-
+            State.NameText = text;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Zoo
         [EventListener(ZooCreationEvents.Submit)]
         private void Submit()
         {
-
+            State.Submitted = true;
         }
 
         /// <summary>
@@ -79,7 +79,8 @@ namespace Zoo
         [EventListener(ZooCreationEvents.Reset)]
         private void Reset()
         {
-
+            State.NameText = "";
+            State.Submitted = false;
         }
 
         #endregion
@@ -93,7 +94,7 @@ namespace Zoo
         [StateAdapter]
         private void AdaptUIState(UIState ui)
         {
-
+            State.Visible = ui.OpenPanel == UIState.ZooCreation;
         }
 
         #endregion
@@ -105,7 +106,9 @@ namespace Zoo
         public override ZooCreationState CloneState()
         {
             return new ZooCreationState() {
-
+                Visible = State.Visible,
+                NameText = State.NameText,
+                Submitted = State.Submitted,
             };
         }
     }

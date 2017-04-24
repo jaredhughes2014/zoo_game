@@ -35,7 +35,7 @@ namespace Zoo.Test
         /// <summary>
         /// Initializes the master controller used in each test
         /// </summary>
-        [OneTimeSetUp]
+        [SetUp]
         public void InitializeMaster()
         {
             Master = new ZooMaster();

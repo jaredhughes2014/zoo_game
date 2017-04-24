@@ -91,7 +91,7 @@ namespace Zoo
         [EventListener(MainMenuEvents.OpenPlayModeMenu)]
         private void OpenPlayModeMenu()
         {
-
+            State.OpenPanel = MainMenuState.PlayModeSelection;
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Zoo
         [EventListener(MainMenuEvents.ReturnToMain)]
         private void ReturnToMain()
         {
-
+            State.OpenPanel = MainMenuState.MainMenu;
         }
 
         /// <summary>
@@ -111,6 +111,7 @@ namespace Zoo
         [EventListener(MainMenuEvents.SelectMap)]
         private void SelectMap(string mapID)
         {
+            State.SelectedMap = mapID;
             Debug.LogWarning("SelectMap in MainMenuState currently has no function");
         }
 
@@ -120,7 +121,8 @@ namespace Zoo
         [EventListener(PlayModeEvents.SelectFreePlay)]
         private void SelectFreePlay()
         {
-
+            State.SelectedPlayMode = MainMenuState.FreePlay;
+            State.OpenPanel = MainMenuState.MapSelection;
         }
 
         /// <summary>
@@ -129,7 +131,8 @@ namespace Zoo
         [EventListener(PlayModeEvents.UndoPlayModeSelection)]
         private void UndoPlayModeSelection()
         {
-
+            State.SelectedPlayMode = "";
+            State.OpenPanel = MainMenuState.PlayModeSelection;
         }
 
         /// <summary>
@@ -138,7 +141,7 @@ namespace Zoo
         [EventListener(MainMenuEvents.SubmitSelections)]
         private void Submit()
         {
-
+            State.Submitted = true;
         }
 
         /// <summary>
@@ -147,7 +150,10 @@ namespace Zoo
         [EventListener(MainMenuEvents.ResetSelections)]
         private void Reset()
         {
-
+            State.OpenPanel = MainMenuState.MainMenu;
+            State.SelectedPlayMode = "";
+            State.SelectedMap = "";
+            State.Submitted = false;
         }
 
         #endregion
@@ -159,7 +165,10 @@ namespace Zoo
         public override MainMenuState CloneState()
         {
             return new MainMenuState() {
-
+                OpenPanel = State.OpenPanel,
+                SelectedMap = State.SelectedMap,
+                SelectedPlayMode = State.SelectedPlayMode,
+                Submitted = State.Submitted,
             };
         }
     }
