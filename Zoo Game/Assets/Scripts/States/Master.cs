@@ -9,9 +9,15 @@ namespace Zoo
     {
         protected override void UseControllers()
         {
+            // Player Data
             Use<AccountState, AccountController>();
+
+            // Main Menu
             Use<MainMenuState, MainMenuController>();
+
+            // UI
             Use<UIState, UIController>();
+            Use<HUDState, HUDController>();
         }
     }
 }

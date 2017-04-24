@@ -71,12 +71,22 @@ namespace Zoo.Test
         /// <returns>Copy of the tested state</returns>
         protected S MakeCopy()
         {
-            return Master.SubscribeToStates<S>().State1;
+            return GetState<S>();
+        }
+
+        /// <summary>
+        /// Gets a copy of the given state. This will throw an exception if the state is not being used
+        /// </summary>
+        /// <typeparam name="T">The type of state to get a copy of</typeparam>
+        /// <returns>Copy of the state</returns>
+        protected T GetState<T>() where T : State, new()
+        {
+            return Master.SubscribeToStates<T>().State1;
         }
 
         #endregion
 
-        #region Tests
+            #region Tests
 
         /// <summary>
         /// Tests that the master controller actually creates the state. This test will always function
