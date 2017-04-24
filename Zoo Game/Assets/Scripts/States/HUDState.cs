@@ -21,12 +21,12 @@ namespace Zoo
         /// <summary>
         /// If true, the motion mode should be set to rotation instead of translation
         /// </summary>
-        public bool RotateEnabled { get; set; }
+        [StateData] public bool RotateEnabled { get; set; }
 
         /// <summary>
         /// If true, the HUD state should be visible
         /// </summary>
-        public bool Visible { get; set; }
+        [StateData] public bool Visible { get; set; }
 
         #endregion
 
