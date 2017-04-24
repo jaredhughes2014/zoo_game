@@ -56,7 +56,7 @@ namespace Zoo
         [EventListener(UIEvents.SetHUDOpen)]
         private void SetHUDOpen()
         {
-
+            State.OpenPanel = UIState.HUD;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Zoo
         [EventListener(UIEvents.SetZooCreationOpen)]
         private void SetZooCreationOpen()
         {
-
+            State.OpenPanel = UIState.ZooCreation;
         }
 
         #endregion
@@ -77,7 +77,7 @@ namespace Zoo
         public override UIState CloneState()
         {
             return new UIState() {
-
+                OpenPanel = State.OpenPanel,
             };
         }
     }
