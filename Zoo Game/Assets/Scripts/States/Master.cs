@@ -11,6 +11,7 @@ namespace Zoo
         {
             Use<AccountState, AccountController>();
             Use<MainMenuState, MainMenuController>();
+            Use<UIState, UIController>();
         }
     }
 }

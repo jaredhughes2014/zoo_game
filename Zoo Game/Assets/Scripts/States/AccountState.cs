@@ -12,8 +12,7 @@ namespace Zoo
     }
 
     /// <summary>
-    /// Contains the state of the player's account. Since this is a client-side container
-    /// for data maintained server-side, this state is not persisted
+    /// Contains the state of the player's account.
     /// </summary>
     [StateContainer("account")]
     public class AccountState : State
@@ -23,12 +22,12 @@ namespace Zoo
         /// <summary>
         /// The player's name
         /// </summary>
-        [StateData] public string Alias { get; set; }
+        [StateData("alias")] public string Alias { get; set; }
 
         /// <summary>
         /// The player's email address
         /// </summary>
-        [StateData] public string Email { get; set; }
+        [StateData("email")] public string Email { get; set; }
 
         #endregion
 

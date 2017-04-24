@@ -6,7 +6,7 @@ namespace Zoo.Test
     /// Tests the behavior of the MainMenu state system
     /// </summary>
     [TestFixture(Description = "Tests of the MainMenuState")]
-    public class MainMenuTest : StateTestFixture<MainMenuState>
+    public class MainMenuTests : StateTestFixture<MainMenuState>
     {
         /// <summary>
         /// Tests that the main menu state is initialized with the correct default values
