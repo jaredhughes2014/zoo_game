@@ -64,7 +64,7 @@ namespace Zoo
         [EventListener(LogInEvents.UpdateEmailText)]
         private void UpdateEmailText(string text)
         {
-
+            State.Email = text;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Zoo
         [EventListener(LogInEvents.UpdatePasswordText)]
         private void UpdatePasswordText(string text)
         {
-
+            State.Password = text;
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Zoo
         [EventListener(LogInEvents.Submit)]
         private void Submit()
         {
-
+            State.Submitted = true;
         }
 
         /// <summary>
@@ -93,7 +93,9 @@ namespace Zoo
         [EventListener(LogInEvents.Reset)]
         private void Reset()
         {
-
+            State.Email = "";
+            State.Password = "";
+            State.Submitted = false;
         }
 
         #endregion
@@ -105,6 +107,9 @@ namespace Zoo
         public override LogInState CloneState()
         {
             return new LogInState() {
+                Email = State.Email,
+                Password = State.Password,
+                Submitted = State.Submitted,
             };
         }
     }
