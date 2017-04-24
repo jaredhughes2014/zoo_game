@@ -18,6 +18,7 @@ namespace Zoo
             // UI
             Use<UIState, UIController>();
             Use<HUDState, HUDController>();
+            Use<ZooCreationState, ZooCreationController>();
         }
     }
 }
