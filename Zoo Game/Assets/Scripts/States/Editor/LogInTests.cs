@@ -32,7 +32,9 @@ namespace Zoo.Test
 
             Assert.AreNotEqual(prev, State.Email);
             Assert.AreEqual(expected, State.Email);
-            Assert.AreEqual(State.Email, MakeCopy().Email);
+
+            var copy = MakeCopy();
+            Assert.AreEqual(State.Email, copy.Email);
         }
 
         /// <summary>
@@ -48,7 +50,9 @@ namespace Zoo.Test
 
             Assert.AreNotEqual(prev, State.Password);
             Assert.AreEqual(expected, State.Password);
-            Assert.AreEqual(State.Password, MakeCopy().Password);
+
+            var copy = MakeCopy();
+            Assert.AreEqual(State.Password, copy.Password);
         }
 
         /// <summary>
@@ -60,7 +64,9 @@ namespace Zoo.Test
             ExecuteStrictAndUpdate(LogInEvents.Submit);
 
             Assert.IsTrue(State.Submitted);
-            Assert.AreEqual(State.Submitted, MakeCopy().Submitted);
+
+            var copy = MakeCopy();
+            Assert.AreEqual(State.Submitted, copy.Submitted);
         }
 
         /// <summary>

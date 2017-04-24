@@ -8,16 +8,14 @@ namespace Zoo.Test
     [TestFixture(Description = "The AccountState contains the player's ZooGame account")]
     public class AccountStateTests : StateTestFixture<AccountState>
     {
-        #region Tests
-
         /// <summary>
         /// Tests that the default values of the account state are set properly
         /// </summary>
         [Test]
         public void TestAccountStateDefaultValues()
         {
-            Assert.NotNull(State.Alias, "The alias should not default to null");
-            Assert.NotNull(State.Email, "The email should not default to null");
+            Assert.IsEmpty(State.Alias);
+            Assert.IsEmpty(State.Email);
         }
 
         /// <summary>
@@ -26,20 +24,24 @@ namespace Zoo.Test
         [Test]
         public void TestSetAccountData()
         {
-            var alias = "TestAlias";
-            var email = "test@test.com";
+            var prevAlias = State.Alias;
+            var prevEmail = State.Email;
+
+            var alias = prevAlias + "_Test";
+            var email = prevEmail + "_Test";
 
             ExecuteStrictAndUpdate(AccountEvents.SetAccountData, alias, email);
 
-            Assert.AreEqual(alias, State.Alias, "SetAccountData did not update the state's alias");
-            Assert.AreEqual(email, State.Email, "SetAccountData did not update the state's email");
+            Assert.AreNotEqual(prevAlias, State.Alias);
+            Assert.AreEqual(alias, State.Alias);
+
+            Assert.AreNotEqual(prevEmail, State.Email);
+            Assert.AreEqual(email, State.Email);
 
             var copy = MakeCopy();
 
-            Assert.AreEqual(State.Alias, copy.Alias, "Copies of the state do not have the same alias after a SetAccountData event");
-            Assert.AreEqual(State.Email, copy.Email, "Copies of the state do not have the same email after a SetAccountData event");
+            Assert.AreEqual(State.Alias, copy.Alias);
+            Assert.AreEqual(State.Email, copy.Email);
         }
-
-        #endregion
     }
 }
