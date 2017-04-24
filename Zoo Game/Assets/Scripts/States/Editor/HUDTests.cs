@@ -14,8 +14,8 @@ namespace Zoo.Test
         [Test]
         public void TestDefaultData()
         {
-            Assert.IsFalse(State.Visible, "State should default to not visible");
-            Assert.IsFalse(State.RotateEnabled, "State should default to rotate disabled");
+            Assert.IsFalse(State.Visible);
+            Assert.IsFalse(State.RotateEnabled);
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Zoo.Test
         [Test]
         public void TestDependenciesUsed()
         {
-            Assert.NotNull(GetState<UIState>(), "UI State, which is a dependency, is not being used");
+            Assert.NotNull(GetState<UIState>());
         }
 
         /// <summary>
@@ -36,11 +36,13 @@ namespace Zoo.Test
             var start = State.RotateEnabled;
 
             ExecuteAndUpdate(HUDEvents.ToggleMovementMode);
-            Assert.AreNotEqual(start, State.RotateEnabled, "ToggleMovementMode is not toggling the movement mode");
-            Assert.AreEqual(State.RotateEnabled, MakeCopy().RotateEnabled, "Copies do not have the same rotate enabled after a ToggleMovementMode event");
+
+            Assert.AreNotEqual(start, State.RotateEnabled);
+            var copy = MakeCopy();
+            Assert.AreEqual(State.RotateEnabled, copy.RotateEnabled);
 
             ExecuteAndUpdate(HUDEvents.ToggleMovementMode);
-            Assert.AreEqual(start, State.RotateEnabled, "ToggleMovementMode does not end at its starting value after two executions");
+            Assert.AreEqual(start, State.RotateEnabled);
         }
 
         /// <summary>
@@ -50,10 +52,10 @@ namespace Zoo.Test
         public void TestSetHUDOpen()
         {
             ExecuteAndUpdate(UIEvents.SetHUDOpen);
-            Assert.True(State.Visible, "SetHUDOpen from the UI state is not making the HUD visible");
+            Assert.True(State.Visible);
 
             ExecuteAndUpdate(UIEvents.SetZooCreationOpen);
-            Assert.False(State.Visible, "Opening a different view in the UI is not making the HUD invisible");
+            Assert.False(State.Visible);
         }
     }
 }

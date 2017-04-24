@@ -16,7 +16,7 @@ namespace Zoo.Test
         [Test]
         public void TestUIDefaultValues()
         {
-            Assert.AreEqual("", State.OpenPanel, "The open panel should default to empty");
+            Assert.IsEmpty(State.OpenPanel);
         }
 
         /// <summary>
@@ -26,10 +26,10 @@ namespace Zoo.Test
         public void TestSetHUDOpen()
         {
             ExecuteStrictAndUpdate(UIEvents.SetHUDOpen);       
-            Assert.AreEqual(UIState.HUD, State.OpenPanel, "SetHUDOpen is not setting the open panel to the HUD");
+            Assert.AreEqual(UIState.HUD, State.OpenPanel);
 
             var copy = MakeCopy();
-            Assert.AreEqual(State.OpenPanel, copy.OpenPanel, "Copies do not have the same open panel after the SetHUDOpen event");
+            Assert.AreEqual(State.OpenPanel, copy.OpenPanel);
         }
 
         /// <summary>
@@ -39,10 +39,10 @@ namespace Zoo.Test
         public void TestSetZooCreationOpen()
         {
             ExecuteStrictAndUpdate(UIEvents.SetZooCreationOpen);
-            Assert.AreEqual(UIState.ZooCreation, State.OpenPanel, "SetZooCreationOpen is not setting the open panel to the ZooCreation");
+            Assert.AreEqual(UIState.ZooCreation, State.OpenPanel);
 
             var copy = MakeCopy();
-            Assert.AreEqual(State.OpenPanel, copy.OpenPanel, "Copies do not have the same open panel after the SetZooCreationOpen event");
+            Assert.AreEqual(State.OpenPanel, copy.OpenPanel);
         }
 
         #endregion
