@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Zoo.UI.Test
 {
@@ -14,6 +15,11 @@ namespace Zoo.UI.Test
         /// The parent object of the view
         /// </summary>
         protected GameObject ViewObject { get; private set; }
+
+        /// <summary>
+        /// Stores all spawned objects so they can be destroyed afterwards
+        /// </summary>
+        private List<GameObject> m_spawnedObjects = new List<GameObject>();
 
         /// <summary>
         /// The view class
@@ -32,6 +38,17 @@ namespace Zoo.UI.Test
         }
 
         /// <summary>
+        /// Tears down the test fixture. This is necessary to prevent stray objects from staying in the scene
+        /// </summary>
+        [TearDown]
+        public virtual void CleanupView()
+        {
+            foreach (var obj in m_spawnedObjects) {
+                Object.DestroyImmediate(obj);
+            }
+        }
+
+        /// <summary>
         /// Convenience function to manually create a monobehaviour
         /// </summary>
         /// <typeparam name="B">The type of monobehaviour to create</typeparam>
@@ -39,6 +56,8 @@ namespace Zoo.UI.Test
         protected B MakeBehaviour<B>() where B : MonoBehaviour
         {
             var obj = new GameObject(string.Format("Simulated {0} Instance", typeof(B).Name));
+            m_spawnedObjects.Add(obj);
+
             obj.AddComponent<B>();
             return obj.GetComponent<B>();
         }

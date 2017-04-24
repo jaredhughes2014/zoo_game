@@ -78,14 +78,15 @@ namespace Zoo.UI.Test
             var previous = View.Email.text;
             var expected = previous + "t";
 
-            var text = previous;
+            string text = null;
 
             View.OnEmailTextChanged += (t) => {
-                Assert.AreNotEqual(previous, t);
-                Assert.AreEqual(expected, t);
+                text = t;
             };
-
             View.Email.text = expected;
+
+            Assert.AreNotEqual(previous, text);
+            Assert.AreEqual(expected, text);
         }
 
         /// <summary>
@@ -97,14 +98,16 @@ namespace Zoo.UI.Test
             var previous = View.Password.text;
             var expected = previous + "t";
 
-            var text = previous;
+            string text = null;
 
             View.OnPasswordTextChanged += (t) => {
-                Assert.AreNotEqual(previous, t);
-                Assert.AreEqual(expected, t);
+                text = t;
             };
 
             View.Email.text = expected;
+
+            Assert.AreNotEqual(previous, text);
+            Assert.AreEqual(expected, text);
         }
 
         #endregion
