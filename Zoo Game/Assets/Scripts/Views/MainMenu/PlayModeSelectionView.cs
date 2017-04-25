@@ -24,7 +24,7 @@ namespace Zoo.UI
         /// </summary>
         public void TapFreePlay()
         {
-
+            if (OnTapFreePlay != null) OnTapFreePlay();
         }
 
         #endregion

@@ -47,12 +47,34 @@ namespace Zoo.UI
         /// <summary>
         /// The email input field
         /// </summary>
-        public InputField Email { get { return m_emailInput; } set { m_emailInput = value; } }
+        public InputField Email
+        {
+            get
+            {
+                return m_emailInput;
+            }
+            set
+            {
+                m_emailInput = value;
+                m_emailInput.onValueChanged.AddListener(ProcessEmailChange);
+            }
+        }
 
         /// <summary>
         /// The password input field
         /// </summary>
-        public InputField Password { get { return m_passwordField; } set { m_passwordField = value; } }
+        public InputField Password
+        {
+            get
+            {
+                return m_passwordField;
+            }
+            set
+            {
+                m_passwordField = value;
+                m_passwordField.onValueChanged.AddListener(ProcessPasswordChange);
+            }
+        }
 
         #endregion
 
@@ -64,7 +86,7 @@ namespace Zoo.UI
         /// <param name="text">The text to set</param>
         public void SetEmailText(string text)
         {
-
+            m_emailInput.text = text;
         }
 
         /// <summary>
@@ -73,7 +95,7 @@ namespace Zoo.UI
         /// <param name="text">The text to set</param>
         public void SetPasswordText(string text)
         {
-
+            m_passwordField.text = text;
         }
 
         #endregion
@@ -85,23 +107,23 @@ namespace Zoo.UI
         /// </summary>
         public void Submit()
         {
-
+            if (OnSubmitClicked != null) OnSubmitClicked();
         }
 
         /// <summary>
         /// Executed every time the email text field changes
         /// </summary>
-        public void ProcessEmailChange()
+        public void ProcessEmailChange(string text)
         {
-
+            if (OnEmailTextChanged != null) OnEmailTextChanged(text);
         }
 
         /// <summary>
         /// Executed every tim the password text field changes
         /// </summary>
-        public void ProcessPasswordChange()
+        public void ProcessPasswordChange(string text)
         {
-
+            if (OnPasswordTextChanged != null) OnPasswordTextChanged(text);     
         }
 
         #endregion
