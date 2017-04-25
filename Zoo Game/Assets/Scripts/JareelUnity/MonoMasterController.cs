@@ -15,7 +15,16 @@ namespace Jareel.Unity
 		/// this system
 		/// </summary>
 		private MasterController m_master;
-		internal MasterController AbstractMaster { get { return m_master; } }
+		internal MasterController AbstractMaster
+        {
+            get { return m_master; }
+
+            set
+            {
+                m_master = value;
+                m_executor = new SequentialExecutor(m_master);
+            }
+        }
 
 		/// <summary>
 		/// Manages execution of updates to the master controller
@@ -31,8 +40,9 @@ namespace Jareel.Unity
 		/// </summary>
 		protected virtual void Awake()
 		{
-			m_master = GenerateMasterController();
-			m_executor = new SequentialExecutor(m_master);
+            if (AbstractMaster == null) {
+                AbstractMaster = GenerateMasterController();
+            }
 		}
 
 		/// <summary>
@@ -62,7 +72,7 @@ namespace Jareel.Unity
 		/// <summary>
 		/// The master controller managed by this mono master controller
 		/// </summary>
-		public T Master { get { return (T)AbstractMaster; } }
+		public T Master { get { return (T)AbstractMaster; } set { AbstractMaster = value; } }
 
 		/// <summary>
 		/// Returns a newly generated copy of a master controller of type T
