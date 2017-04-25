@@ -48,6 +48,7 @@ namespace Zoo.UI
             set
             {
                 m_nameField = value;
+                m_nameField.onValueChanged.AddListener(ProcessNameUpdate);
             }
         }
 
@@ -61,7 +62,7 @@ namespace Zoo.UI
         /// <param name="text">The text of the name input</param>
         public void UpdateNameText(string text)
         {
-
+            m_nameField.text = text;
         }
 
         #endregion
@@ -73,7 +74,16 @@ namespace Zoo.UI
         /// </summary>
         public void TapSubmit()
         {
+            if (OnSubmitTapped != null) OnSubmitTapped();
+        }
 
+        /// <summary>
+        /// Executed as a callback to execute the name update event
+        /// </summary>
+        /// <param name="text">The text of the name input</param>
+        public void ProcessNameUpdate(string text)
+        {
+            if (OnNameTextChanged != null) OnNameTextChanged(text);
         }
 
         #endregion

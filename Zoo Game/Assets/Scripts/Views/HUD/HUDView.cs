@@ -24,7 +24,7 @@ namespace Zoo.UI
         /// </summary>
         public void ChangeMovementMode()
         {
-
+            if (OnChangeMovementMode != null) OnChangeMovementMode();
         }
 
         #endregion

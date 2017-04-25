@@ -49,7 +49,7 @@ namespace Zoo.UI.Test
             View.OnNameTextChanged += (text) => {
                 success = text == expected;
             };
-            View.UpdateNameText(expected);
+            View.ProcessNameUpdate(expected);
 
             Assert.IsTrue(success);
         }

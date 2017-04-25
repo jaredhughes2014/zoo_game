@@ -51,7 +51,7 @@ namespace Zoo.UI.Test
             View.OnEmailTextChanged += (text) => {
                 success = text == expected;
             };
-            View.SetEmailText(expected);
+            View.ProcessEmailChange(expected);
 
             Assert.True(success);
         }
@@ -85,7 +85,7 @@ namespace Zoo.UI.Test
             View.OnPasswordTextChanged += (text) => {
                 success = text == expected;
             };
-            View.SetPasswordText(expected);
+            View.ProcessPasswordChange(expected);
 
             Assert.True(success);
         }
