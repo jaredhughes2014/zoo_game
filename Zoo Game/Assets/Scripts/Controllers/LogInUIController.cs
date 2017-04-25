@@ -28,6 +28,26 @@ namespace Zoo.Controllers
 #endif
         #endregion
 
+        #region Setup
+
+        protected override void Start()
+        {
+            base.Start();
+
+            LogIn.OnEmailTextChanged += UpdateEmailText;
+            LogIn.OnPasswordTextChanged += UpdatePasswordText;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            LogIn.OnEmailTextChanged += UpdateEmailText;
+            LogIn.OnPasswordTextChanged += UpdatePasswordText;
+        }
+
+        #endregion
+
         /// <summary>
         /// Updates the view to reflect the most recent changes to the subscribed states
         /// </summary>
@@ -36,6 +56,24 @@ namespace Zoo.Controllers
         {
             LogIn.SetEmailText(logIn.Email);
             LogIn.SetPasswordText(logIn.Password);
+        }
+
+        /// <summary>
+        /// Relays a change from the log in view's email text input to the state
+        /// </summary>
+        /// <param name="text">The current email input text</param>
+        private void UpdateEmailText(string text)
+        {
+            Events.ExecuteStrict(LogInEvents.UpdateEmailText, text);
+        }
+
+        /// <summary>
+        /// Relays a change from the log in view's password text input to the state
+        /// </summary>
+        /// <param name="text">The current password input text</param>
+        private void UpdatePasswordText(string text)
+        {
+            Events.ExecuteStrict(LogInEvents.UpdatePasswordText, text);
         }
     }
 }
