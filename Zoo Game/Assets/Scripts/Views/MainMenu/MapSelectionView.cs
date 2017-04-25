@@ -25,7 +25,7 @@ namespace Zoo.UI
         /// <param name="mapID">The ID of the map that was tapped</param>
         public void TapMap(string mapID)
         {
-
+            if (OnTapMap != null) OnTapMap(mapID);
         }
 
         #endregion
