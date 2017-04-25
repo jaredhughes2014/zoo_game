@@ -9,8 +9,17 @@ namespace Zoo.Controllers.Test
     /// <summary>
     /// Tests the behavior of the controller test fixture
     /// </summary>
-    public class LogInTests : ControllerTestFixture<LogInController>
+    public class LogInUITests : ControllerTestFixture<LogInUIController>
     {
+        #region View Shortcuts
+
+        /// <summary>
+        /// Shortcut to the LogInView attached to the controller
+        /// </summary>
+        private LogInView LogIn { get { return Controller.LogIn; } }
+
+        #endregion
+
         #region Setup
 
         /// <summary>
@@ -21,8 +30,8 @@ namespace Zoo.Controllers.Test
             base.InitializeController();
 
             Controller.LogIn = MakeBehaviour<LogInView>();
-            Controller.LogIn.Email = MakeBehaviour<InputField>();
-            Controller.LogIn.Password = MakeBehaviour<InputField>();
+            LogIn.Email = MakeBehaviour<InputField>();
+            LogIn.Password = MakeBehaviour<InputField>();
         }
 
         #endregion
@@ -35,13 +44,13 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestUpdateEmailText()
         {
-            var previous = Controller.LogIn.Email.text;
+            var previous = LogIn.Email.text;
             var expected = previous + "t";
 
             yield return ExecuteStrictAndUpdate(LogInEvents.UpdateEmailText, expected);
 
-            Assert.AreNotEqual(previous, Controller.LogIn.Email.text);
-            Assert.AreEqual(expected, Controller.LogIn.Email.text);
+            Assert.AreNotEqual(previous, LogIn.Email.text);
+            Assert.AreEqual(expected, LogIn.Email.text);
         }
 
         /// <summary>
@@ -50,13 +59,13 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestUpdatePasswordText()
         {
-            var previous = Controller.LogIn.Password.text;
+            var previous = LogIn.Password.text;
             var expected = previous + "t";
 
             yield return ExecuteStrictAndUpdate(LogInEvents.UpdatePasswordText, expected);
 
-            Assert.AreNotEqual(previous, Controller.LogIn.Password.text);
-            Assert.AreEqual(expected, Controller.LogIn.Password.text);
+            Assert.AreNotEqual(previous, LogIn.Password.text);
+            Assert.AreEqual(expected, LogIn.Password.text);
         }
 
         /// <summary>
@@ -65,8 +74,8 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestSubmitUpdatesAccountState()
         {
-            var email = Controller.LogIn.Email.text + "t";
-            var pw = Controller.LogIn.Password.text + "t";
+            var email = LogIn.Email.text + "t";
+            var pw = LogIn.Password.text + "t";
 
             ExecuteStrict(LogInEvents.UpdateEmailText, email);
             ExecuteStrict(LogInEvents.UpdatePasswordText, pw);
@@ -85,16 +94,16 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestResetClearsInputText()
         {
-            var email = Controller.LogIn.Email.text + "t";
-            var pw = Controller.LogIn.Password.text + "t";
+            var email = LogIn.Email.text + "t";
+            var pw = LogIn.Password.text + "t";
 
             // Simulate each key stroke taking one frame
             yield return ExecuteStrictAndUpdate(LogInEvents.UpdateEmailText, email);
             yield return ExecuteStrictAndUpdate(LogInEvents.UpdatePasswordText, pw);
             yield return ExecuteStrictAndUpdate(LogInEvents.Reset);
 
-            Assert.IsEmpty(Controller.LogIn.Email.text);
-            Assert.IsEmpty(Controller.LogIn.Password.text);
+            Assert.IsEmpty(LogIn.Email.text);
+            Assert.IsEmpty(LogIn.Password.text);
         }
 
         /// <summary>
@@ -104,11 +113,11 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestEmailTextChangesUpdatesState()
         {
-            var previous = Controller.LogIn.Email.text;
+            var previous = LogIn.Email.text;
             var text = previous + "t";
 
             // The controller should execute an event to update the email text
-            Controller.LogIn.ProcessEmailChange(text);
+            LogIn.ProcessEmailChange(text);
             yield return null;
 
             var state = GetState<LogInState>();
@@ -123,11 +132,11 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestPasswordTextChangesUpdatesState()
         {
-            var previous = Controller.LogIn.Password.text;
+            var previous = LogIn.Password.text;
             var text = previous + "t";
 
             // The controller should execute an event to update the email text
-            Controller.LogIn.ProcessPasswordChange(text);
+            LogIn.ProcessPasswordChange(text);
             yield return null;
 
             var state = GetState<LogInState>();

@@ -8,8 +8,27 @@ namespace Zoo.Controllers.Test
     /// <summary>
     /// Tests the interaction between the state system and the main menu UI
     /// </summary>
-    public class MainMenuTests : ControllerTestFixture<MainMenuController>
+    public class MainMenuUITests : ControllerTestFixture<MainMenuUIController>
     {
+        #region View Shortcuts
+
+        /// <summary>
+        /// Shortcut to the MainMenuView attached to the controller
+        /// </summary>
+        private MainMenuView MainMenu { get { return Controller.MainMenu; } }
+
+        /// <summary>
+        /// Shortcut to the MapSelectionView attached to the controller
+        /// </summary>
+        private MapSelectionView MapSelection { get { return Controller.MapSelection; } }
+
+        /// <summary>
+        /// Shortcut to the PlayModeSelectionView attached to the controller
+        /// </summary>
+        private PlayModeSelectionView PlayModeSelection { get { return Controller.PlayModeSelection; } }
+
+        #endregion
+
         #region Setup
 
         /// <summary>
@@ -64,9 +83,9 @@ namespace Zoo.Controllers.Test
             // At least one frame should execute to receive state changes
             yield return null;
 
-            Assert.IsTrue(Controller.MainMenu.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MapSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.PlayModeSelection.gameObject.activeInHierarchy);
+            Assert.IsTrue(MainMenu.gameObject.activeInHierarchy);
+            Assert.IsFalse(MapSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(PlayModeSelection.gameObject.activeInHierarchy);
         }
 
         /// <summary>
@@ -78,9 +97,9 @@ namespace Zoo.Controllers.Test
             // At least one frame should execute to receive state changes
             yield return ExecuteStrictAndUpdate(MainMenuEvents.OpenPlayModeMenu);
 
-            Assert.IsTrue(Controller.PlayModeSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MainMenu.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MapSelection.gameObject.activeInHierarchy);
+            Assert.IsTrue(PlayModeSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(MainMenu.gameObject.activeInHierarchy);
+            Assert.IsFalse(MapSelection.gameObject.activeInHierarchy);
         }
 
         /// <summary>
@@ -92,9 +111,9 @@ namespace Zoo.Controllers.Test
             // At least one frame should execute to receive state changes
             yield return ExecuteStrictAndUpdate(PlayModeEvents.SelectFreePlay);
 
-            Assert.IsTrue(Controller.MapSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.PlayModeSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MainMenu.gameObject.activeInHierarchy);
+            Assert.IsTrue(MapSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(PlayModeSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(MainMenu.gameObject.activeInHierarchy);
         }
 
         /// <summary>
@@ -107,9 +126,9 @@ namespace Zoo.Controllers.Test
             // At least one frame should execute to receive state changes
             yield return ExecuteStrictAndUpdate(PlayModeEvents.UndoPlayModeSelection);
 
-            Assert.IsTrue(Controller.PlayModeSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MapSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MainMenu.gameObject.activeInHierarchy);
+            Assert.IsTrue(PlayModeSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(MapSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(MainMenu.gameObject.activeInHierarchy);
         }
 
         /// <summary>
@@ -122,9 +141,9 @@ namespace Zoo.Controllers.Test
             // At least one frame should execute to receive state changes
             yield return ExecuteStrictAndUpdate(MainMenuEvents.ReturnToMain);
 
-            Assert.IsTrue(Controller.MainMenu.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.PlayModeSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MapSelection.gameObject.activeInHierarchy);
+            Assert.IsTrue(MainMenu.gameObject.activeInHierarchy);
+            Assert.IsFalse(PlayModeSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(MapSelection.gameObject.activeInHierarchy);
         }
 
         /// <summary>
@@ -133,13 +152,13 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestMainMenuTapPlayMode()
         {
-            Controller.MainMenu.TapPlayMode();
+            MainMenu.TapPlayMode();
 
             yield return null;
 
-            Assert.IsTrue(Controller.PlayModeSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MainMenu.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MapSelection.gameObject.activeInHierarchy);
+            Assert.IsTrue(PlayModeSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(MainMenu.gameObject.activeInHierarchy);
+            Assert.IsFalse(MapSelection.gameObject.activeInHierarchy);
         }
 
         /// <summary>
@@ -149,16 +168,16 @@ namespace Zoo.Controllers.Test
         [UnityTest]
         public IEnumerator TestPlayModeSelectionTapFreePlay()
         {
-            Controller.PlayModeSelection.TapFreePlay();
+            PlayModeSelection.TapFreePlay();
 
             yield return null;
 
             var state = GetState<MainMenuState>();
             Assert.AreEqual(MainMenuState.FreePlay, state.SelectedPlayMode);
 
-            Assert.IsTrue(Controller.MapSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.PlayModeSelection.gameObject.activeInHierarchy);
-            Assert.IsFalse(Controller.MainMenu.gameObject.activeInHierarchy);
+            Assert.IsTrue(MapSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(PlayModeSelection.gameObject.activeInHierarchy);
+            Assert.IsFalse(MainMenu.gameObject.activeInHierarchy);
         }
 
         /// <summary>
@@ -168,7 +187,7 @@ namespace Zoo.Controllers.Test
         public IEnumerator TestMapSelectionTapMapSetsMapID()
         {
             var expected = "Test";
-            Controller.MapSelection.TapMap(expected);
+            MapSelection.TapMap(expected);
 
             yield return null;
 

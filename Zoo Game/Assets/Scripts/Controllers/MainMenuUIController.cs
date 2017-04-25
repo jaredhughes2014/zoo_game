@@ -8,7 +8,7 @@ namespace Zoo.Controllers
     /// <summary>
     /// Updates the main menu views to reflect the current state of the system
     /// </summary>
-    public class MainMenuController : MonoStateSubscriber<MainMenuState>
+    public class MainMenuUIController : MonoStateSubscriber<MainMenuState>
     {
         #region Fields
 

@@ -8,7 +8,7 @@ namespace Zoo.Controllers
     /// <summary>
     /// The LogInController conveys changes from the state system to a LogInView
     /// </summary>
-    public class LogInController : MonoStateSubscriber<LogInState>
+    public class LogInUIController : MonoStateSubscriber<LogInState>
     {
         #region Fields
 
