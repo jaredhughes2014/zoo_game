@@ -12,9 +12,7 @@ namespace Zoo.Controllers
     {
         #region Fields
 
-        /// <summary>
-        /// The log in view
-        /// </summary>
+        // Editor Fields
         [SerializeField] private LogInView m_logIn;
 
         #endregion

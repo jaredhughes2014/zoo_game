@@ -32,7 +32,6 @@ namespace Zoo.Controllers.Test
         /// <summary>
         /// Tests the effect of the update email text event from the controller to the view
         /// </summary>
-        /// <returns>Enumerator used to simulate frames</returns>
         [UnityTest]
         public IEnumerator TestUpdateEmailText()
         {
@@ -48,7 +47,6 @@ namespace Zoo.Controllers.Test
         /// <summary>
         /// Tests the effect of the update password event from the controller to the view
         /// </summary>
-        /// <returns>Enumerator used to simulate frames</returns>
         [UnityTest]
         public IEnumerator TestUpdatePasswordText()
         {
@@ -64,7 +62,6 @@ namespace Zoo.Controllers.Test
         /// <summary>
         /// Tests the effect of the submit event on the state system
         /// </summary>
-        /// <returns>Enumerator used to simulate frames</returns>
         [UnityTest]
         public IEnumerator TestSubmitUpdatesAccountState()
         {
@@ -85,7 +82,6 @@ namespace Zoo.Controllers.Test
         /// <summary>
         /// Tests that the effects of the Reset event are carried to the LogIn view
         /// </summary>
-        /// <returns>Enumerator used to simulate Unity frames</returns>
         [UnityTest]
         public IEnumerator TestResetClearsInputText()
         {
@@ -99,6 +95,44 @@ namespace Zoo.Controllers.Test
 
             Assert.IsEmpty(Controller.LogIn.Email.text);
             Assert.IsEmpty(Controller.LogIn.Password.text);
+        }
+
+        /// <summary>
+        /// Tests that updates to the email text input cause the state to reflect
+        /// the most recent text input
+        /// </summary>
+        [UnityTest]
+        public IEnumerator TestEmailTextChangesUpdatesState()
+        {
+            var previous = Controller.LogIn.Email.text;
+            var text = previous + "t";
+
+            // The controller should execute an event to update the email text
+            Controller.LogIn.ProcessEmailChange(text);
+            yield return null;
+
+            var state = GetState<LogInState>();
+            Assert.AreNotEqual(previous, state.Email);
+            Assert.AreEqual(text, state.Email);
+        }
+
+        /// <summary>
+        /// Tests that updates to the password text input cause the state to reflect
+        /// the most recent text input
+        /// </summary>
+        [UnityTest]
+        public IEnumerator TestPasswordTextChangesUpdatesState()
+        {
+            var previous = Controller.LogIn.Password.text;
+            var text = previous + "t";
+
+            // The controller should execute an event to update the email text
+            Controller.LogIn.ProcessPasswordChange(text);
+            yield return null;
+
+            var state = GetState<LogInState>();
+            Assert.AreNotEqual(previous, state.Password);
+            Assert.AreEqual(text, state.Password);
         }
 
         #endregion
