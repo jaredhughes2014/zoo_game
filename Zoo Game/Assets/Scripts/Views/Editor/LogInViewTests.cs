@@ -1,7 +1,6 @@
 ﻿
 using UnityEngine.UI;
 using NUnit.Framework;
-using UnityEngine.TestTools;
 
 namespace Zoo.UI.Test
 {
@@ -39,6 +38,25 @@ namespace Zoo.UI.Test
         }
 
         /// <summary>
+        /// Tests the behavior of the OnEmailTextChanged event
+        /// </summary>
+        [Test]
+        public void TestOnEmailTextChangedEvent()
+        {
+            var previous = View.Email.text;
+            var expected = previous + "t";
+
+            bool success = false;
+
+            View.OnEmailTextChanged += (text) => {
+                success = text == expected;
+            };
+            View.SetEmailText(expected);
+
+            Assert.True(success);
+        }
+
+        /// <summary>
         /// Tests the behavior of the SetPasswordText function
         /// </summary>
         [Test]
@@ -51,6 +69,25 @@ namespace Zoo.UI.Test
 
             Assert.AreNotEqual(previous, View.Password.text);
             Assert.AreEqual(expected, View.Password.text);
+        }
+
+        /// <summary>
+        /// Tests the behavior of the OnPasswordTextUpdated event
+        /// </summary>
+        [Test]
+        public void TestOnPasswordTextChangedEvent()
+        {
+            var previous = View.Password.text;
+            var expected = previous + "t";
+
+            bool success = false;
+
+            View.OnPasswordTextChanged += (text) => {
+                success = text == expected;
+            };
+            View.SetPasswordText(expected);
+
+            Assert.True(success);
         }
 
         /// <summary>
@@ -67,47 +104,6 @@ namespace Zoo.UI.Test
             View.Submit();
 
             Assert.IsTrue(success);
-        }
-
-        /// <summary>
-        /// Tests the behavior of the OnEmailTextChanged event
-        /// </summary>
-        [Test]
-        public void TestOnEmailTextChangedEvent()
-        {
-            var previous = View.Email.text;
-            var expected = previous + "t";
-
-            string text = null;
-
-            View.OnEmailTextChanged += (t) => {
-                text = t;
-            };
-            View.Email.text = expected;
-
-            Assert.AreNotEqual(previous, text);
-            Assert.AreEqual(expected, text);
-        }
-
-        /// <summary>
-        /// Tests the behavior of the OnPasswordChangedEvent event
-        /// </summary>
-        [Test]
-        public void TestOnPasswordChangedEvent()
-        {
-            var previous = View.Password.text;
-            var expected = previous + "t";
-
-            string text = null;
-
-            View.OnPasswordTextChanged += (t) => {
-                text = t;
-            };
-
-            View.Email.text = expected;
-
-            Assert.AreNotEqual(previous, text);
-            Assert.AreEqual(expected, text);
         }
 
         #endregion
