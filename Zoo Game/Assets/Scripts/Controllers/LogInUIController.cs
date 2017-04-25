@@ -31,9 +31,11 @@ namespace Zoo.Controllers
         /// <summary>
         /// Updates the view to reflect the most recent changes to the subscribed states
         /// </summary>
-        /// <param name="state1">The state of the LogIn view</param>
-        protected override void OnStateChanged(LogInState state1)
+        /// <param name="logIn">The state of the LogIn view</param>
+        protected override void OnStateChanged(LogInState logIn)
         {
+            LogIn.SetEmailText(logIn.Email);
+            LogIn.SetPasswordText(logIn.Password);
         }
     }
 }
