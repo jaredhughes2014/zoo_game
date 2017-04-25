@@ -29,6 +29,14 @@ namespace Zoo.Controllers.Test
         {
             base.InitializeController();
 
+            GenerateLogIn();
+        }
+
+        /// <summary>
+        /// Generates the LogIn view
+        /// </summary>
+        private void GenerateLogIn()
+        {
             Controller.LogIn = MakeBehaviour<LogInView>();
             LogIn.Email = MakeBehaviour<InputField>();
             LogIn.Password = MakeBehaviour<InputField>();

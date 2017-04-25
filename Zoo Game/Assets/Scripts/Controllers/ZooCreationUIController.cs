@@ -34,7 +34,6 @@ namespace Zoo.Controllers
         /// <param name="zooCreation">The current state of zoo creation</param>
         protected override void OnStateChanged(ZooCreationState zooCreation)
         {
-            throw new NotImplementedException();
         }
     }
 }
