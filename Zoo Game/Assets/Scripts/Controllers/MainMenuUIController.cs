@@ -1,7 +1,7 @@
 ﻿using Jareel.Unity;
 using Zoo.UI;
 using UnityEngine;
-using System;
+using UnityEngine.SceneManagement;
 
 namespace Zoo.Controllers
 {
@@ -42,12 +42,68 @@ namespace Zoo.Controllers
 #endif
         #endregion
 
+        #region Setup
+
+        protected override void Start()
+        {
+            base.Start();
+
+            MainMenu.OnTapPlayMode += RegisterPlayModeTapped;
+            PlayModeSelection.OnTapFreePlay += RegisterFreePlayTapped;
+            MapSelection.OnTapMap += RegisterMapSelection;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            MainMenu.OnTapPlayMode -= RegisterPlayModeTapped;
+            PlayModeSelection.OnTapFreePlay -= RegisterFreePlayTapped;
+            MapSelection.OnTapMap -= RegisterMapSelection;
+        }
+
+        #endregion
+
         /// <summary>
         /// Executed every time the state changes to update the views to reflect the state
         /// </summary>
         /// <param name="mainMenu">The state of the main menu</param>
         protected override void OnStateChanged(MainMenuState mainMenu)
         {
+            if (mainMenu.Submitted) {
+                SceneManager.LoadScene("Game");
+            }
+            else {
+                MainMenu.gameObject.SetActive(mainMenu.OpenPanel == MainMenuState.MainMenu);
+                MapSelection.gameObject.SetActive(mainMenu.OpenPanel == MainMenuState.MapSelection);
+                PlayModeSelection.gameObject.SetActive(mainMenu.OpenPanel == MainMenuState.PlayModeSelection);
+            }
+        }
+
+        /// <summary>
+        /// Listener to the main menu's play mode tap event
+        /// </summary>
+        private void RegisterPlayModeTapped()
+        {
+            Events.ExecuteStrict(MainMenuEvents.OpenPlayModeMenu);
+        }
+
+        /// <summary>
+        /// Listener to the main menu's play mode tap event
+        /// </summary>
+        private void RegisterFreePlayTapped()
+        {
+            Events.ExecuteStrict(PlayModeEvents.SelectFreePlay);
+        }
+
+        /// <summary>
+        /// Registers a map selection made by the user
+        /// </summary>
+        /// <param name="mapID">The ID of the map</param>
+        private void RegisterMapSelection(string mapID)
+        {
+            Events.ExecuteStrict(MainMenuEvents.SelectMap, mapID);
+            Events.ExecuteStrict(MainMenuEvents.SubmitSelections);
         }
     }
 }
