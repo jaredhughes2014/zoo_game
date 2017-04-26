@@ -71,7 +71,8 @@ namespace Zoo.Controllers
         protected override void OnStateChanged(MainMenuState mainMenu)
         {
             if (mainMenu.Submitted) {
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene("GameUI");
+                SceneManager.LoadScene("GameWorld", LoadSceneMode.Additive);
             }
             else {
                 MainMenu.gameObject.SetActive(mainMenu.OpenPanel == MainMenuState.MainMenu);
