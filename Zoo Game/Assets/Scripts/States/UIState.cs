@@ -30,7 +30,7 @@ namespace Zoo
         /// <summary>
         /// The name of the panel that is currently open
         /// </summary>
-        public string OpenPanel { get; set; }
+        [StateData] public string OpenPanel { get; set; }
 
         #endregion
 

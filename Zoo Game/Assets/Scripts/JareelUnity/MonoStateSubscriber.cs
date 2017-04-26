@@ -50,7 +50,7 @@ namespace Jareel.Unity
 		/// </summary>
 		protected virtual void Start()
 		{
-            if (m_master != null) {
+            if (m_master == null) {
                 var transform = this.transform;
                 while (transform != null) {
                     transform = transform.parent;

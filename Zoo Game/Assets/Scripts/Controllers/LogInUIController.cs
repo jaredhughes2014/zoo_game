@@ -1,5 +1,6 @@
 ﻿using Jareel.Unity;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using Zoo.UI;
 
@@ -36,14 +37,16 @@ namespace Zoo.Controllers
 
             LogIn.OnEmailTextChanged += UpdateEmailText;
             LogIn.OnPasswordTextChanged += UpdatePasswordText;
+            LogIn.OnSubmitClicked += HandleSubmission;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            LogIn.OnEmailTextChanged += UpdateEmailText;
-            LogIn.OnPasswordTextChanged += UpdatePasswordText;
+            LogIn.OnEmailTextChanged -= UpdateEmailText;
+            LogIn.OnPasswordTextChanged -= UpdatePasswordText;
+            LogIn.OnSubmitClicked -= HandleSubmission;
         }
 
         #endregion
@@ -54,8 +57,15 @@ namespace Zoo.Controllers
         /// <param name="logIn">The state of the LogIn view</param>
         protected override void OnStateChanged(LogInState logIn)
         {
-            LogIn.SetEmailText(logIn.Email);
-            LogIn.SetPasswordText(logIn.Password);
+            if (logIn.Submitted) {
+                Events.ExecuteStrict(AccountEvents.SetAccountData, logIn.Email, logIn.Email);
+                Events.ExecuteStrict(LogInEvents.Reset);
+                SceneManager.LoadScene("MainMenu");
+            }
+            else {
+                LogIn.SetEmailText(logIn.Email);
+                LogIn.SetPasswordText(logIn.Password);
+            }
         }
 
         /// <summary>
@@ -74,6 +84,14 @@ namespace Zoo.Controllers
         private void UpdatePasswordText(string text)
         {
             Events.ExecuteStrict(LogInEvents.UpdatePasswordText, text);
+        }
+
+        /// <summary>
+        /// Handles the submit event from the UI
+        /// </summary>
+        private void HandleSubmission()
+        {
+            Events.ExecuteStrict(LogInEvents.Submit);
         }
     }
 }
