@@ -48,22 +48,22 @@ namespace Zoo
         /// <summary>
         /// The name of the panel that is currently open.
         /// </summary>
-        public string OpenPanel { get; set; }
+        [StateData] public string OpenPanel { get; set; }
 
         /// <summary>
         /// The play mode selected by the player
         /// </summary>
-        public string SelectedPlayMode { get; set; }
+        [StateData] public string SelectedPlayMode { get; set; }
 
         /// <summary>
         /// The ID of the map selected by the user
         /// </summary>
-        public string SelectedMap { get; set; }
+        [StateData] public string SelectedMap { get; set; }
 
         /// <summary>
         /// If true, a submission has been received
         /// </summary>
-        public bool Submitted { get; set; }
+        [StateData] public bool Submitted { get; set; }
 
         #endregion
 

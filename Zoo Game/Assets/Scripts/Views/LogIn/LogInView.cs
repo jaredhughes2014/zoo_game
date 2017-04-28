@@ -78,6 +78,16 @@ namespace Zoo.UI
 
         #endregion
 
+        #region Setup
+
+        private void Start()
+        {
+            m_emailInput.onValueChanged.AddListener(ProcessEmailChange);
+            m_passwordField.onValueChanged.AddListener(ProcessPasswordChange);
+        }
+
+        #endregion
+
         #region Controller Updates
 
         /// <summary>

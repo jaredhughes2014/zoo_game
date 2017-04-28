@@ -1,4 +1,5 @@
 ﻿using Jareel.Unity;
+using UnityEngine;
 
 namespace Zoo
 {
@@ -7,5 +8,9 @@ namespace Zoo
     /// </summary>
     public class ZooGameMaster : MonoMasterController<ZooMaster>
     {
+        private void OnDestroy()
+        {
+            Debug.Log(Master.ExportDebugState());
+        }
     }
 }
