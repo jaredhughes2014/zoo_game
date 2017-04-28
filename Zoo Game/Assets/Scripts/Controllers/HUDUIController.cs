@@ -33,6 +33,7 @@ namespace Zoo.Controllers
         /// <param name="hud">The current state of the HUD</param>
         protected override void OnStateChanged(HUDState hud)
         {
+            m_hud.gameObject.SetActive(hud.Visible);
         }
     }
 }

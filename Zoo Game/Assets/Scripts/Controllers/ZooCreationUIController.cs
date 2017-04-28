@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Jareel.Unity;
 using Zoo.UI;
-using System;
 
 namespace Zoo.Controllers
 {
@@ -28,12 +27,53 @@ namespace Zoo.Controllers
 #endif
         #endregion
 
+        #region Setup
+
+        protected override void Start()
+        {
+            base.Start();
+
+            m_zooCreation.OnSubmitTapped += SubmitCreatedZoo;
+            m_zooCreation.OnNameTextChanged += UpdateNameText;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            m_zooCreation.OnSubmitTapped -= SubmitCreatedZoo;
+            m_zooCreation.OnNameTextChanged -= UpdateNameText;
+        }
+
+        #endregion
+
         /// <summary>
         /// Updates the views based on the current state of zoo creation
         /// </summary>
         /// <param name="zooCreation">The current state of zoo creation</param>
         protected override void OnStateChanged(ZooCreationState zooCreation)
         {
+            if (zooCreation.Submitted) {
+                Events.ExecuteStrict(UIEvents.SetHUDOpen);
+            }
+            m_zooCreation.gameObject.SetActive(zooCreation.Visible);
+        }
+
+        /// <summary>
+        /// Submits a zoo that has been created
+        /// </summary>
+        private void SubmitCreatedZoo()
+        {
+            Events.ExecuteStrict(ZooCreationEvents.Submit);
+        }
+
+        /// <summary>
+        /// Updates the text of the name field for zoo creation
+        /// </summary>
+        /// <param name="text">The text for the name of the zoo</param>
+        private void UpdateNameText(string text)
+        {
+            Events.ExecuteStrict(ZooCreationEvents.SetNameText, text);
         }
     }
 }
