@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Jareel.Unity
 {
@@ -43,6 +44,13 @@ namespace Jareel.Unity
             if (AbstractMaster == null) {
                 AbstractMaster = GenerateMasterController();
             }
+
+            if (FindObjectsOfType<MonoMasterController>().Length > 1) {
+                Debug.LogWarning("Cannot have more than one MonoMasterController active at one time. Destroying...", this);
+                Destroy(gameObject);
+            }
+
+            DontDestroyOnLoad(gameObject);
 		}
 
 		/// <summary>
@@ -72,7 +80,7 @@ namespace Jareel.Unity
 		/// <summary>
 		/// The master controller managed by this mono master controller
 		/// </summary>
-		public T Master { get { return (T)AbstractMaster; } set { AbstractMaster = value; } }
+		public virtual T Master { get { return (T)AbstractMaster; } set { AbstractMaster = value; } }
 
 		/// <summary>
 		/// Returns a newly generated copy of a master controller of type T

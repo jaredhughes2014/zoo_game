@@ -36,7 +36,7 @@ namespace Jareel.Unity
 		/// The master controller this subscribes to. If this field is not set, the subscriber will
 		/// ascend up the heirarchy to try to set this field
 		/// </summary>
-		[SerializeField] private MonoMasterController m_master;
+		[SerializeField] private MonoMasterExtension m_master;
 
 		#endregion
 
@@ -54,7 +54,7 @@ namespace Jareel.Unity
                 var transform = this.transform;
                 while (transform != null) {
                     transform = transform.parent;
-                    var master = transform.gameObject.GetComponent<MonoMasterController>();
+                    var master = transform.gameObject.GetComponent<MonoMasterExtension>();
 
                     if (master != null) {
                         MountToMaster(master);
@@ -73,7 +73,7 @@ namespace Jareel.Unity
         /// Connects this subscriber to a mono master controller and mounts this subscriber to the master
         /// </summary>
         /// <param name="master">The mono master to connect to</param>
-        public void MountToMaster(MonoMasterController master)
+        public void MountToMaster(MonoMasterExtension master)
         {
             m_master = master;
 
@@ -94,7 +94,7 @@ namespace Jareel.Unity
         /// </summary>
         public void DismountFromMaster()
         {
-            if (m_master != null && AbstractSubscriber != null) {
+            if (m_master != null && m_master.AbstractMaster != null &&  AbstractSubscriber != null) {
                 m_master.AbstractMaster.DisconnectSubscriber(AbstractSubscriber);
             }
             else {
